@@ -6,8 +6,8 @@
 //
 #include <vector>
 #include <memory>
-#include <shellapi.h>
 #include <windows.h>
+#include <shellapi.h>
 #include <CommCtrl.h>
 #include "./Dialog/CAboutDlg.h"
 //#include "../../Steam/sdk/public/steam/steam_api.h"
@@ -24,6 +24,8 @@ using namespace std;
 #define RACECORE24_APPLICATION_NAME					L"Is Keyboard Rootkitted Application x64 { by Kjetil Kristoffer Solberg (post@ikjetil.no) }"
 #define RACECORE24_NOTIFYICON_CALLBACK_MESSAGE		WM_USER + 3
 #define RACECORE24_NOTIFYICON_ICONID				WM_USER + 3
+
+
 
 //
 // namespace

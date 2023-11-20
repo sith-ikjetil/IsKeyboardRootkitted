@@ -7,6 +7,9 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <Windows.h>
+#include <cfgmgr32.h>
+#include <strsafe.h>
 #include "CApplication.h"
 #include "../../Include/itsoftware.h"
 #include "Main.h"
@@ -14,6 +17,7 @@
 #include <winerror.h>
 #include "../../Include/IS_KEYBOARD_RKT_OUTPUT_DATA.h"
 #include <uxtheme.h>
+#include <guiddef.h>
 //#include "../../Steam/sdk/public/steam/steam_api.h"
 // sdkencryptedappticket64.lib steam_api64.lib 
 //#include "../../Steam/sdk/public/steam/cegclient.h"
@@ -32,89 +36,25 @@ const COLORREF g_LISTVIEW_TEXT_BK_COLOR = 0xFFFFFFFF;
 const COLORREF g_LISTVIEW_TEXT_COLOR = 0x00101010;
 
 //
+// GUID DEVINTERFACE ROOTKITTED DRIVER
+//
+//DEFINE_GUID(GUID_DEVINTERFACE_IsKeyboardRootkittedDriver,
+//	0x676b766c, 0x5442, 0x4550, 0x8d, 0xb9, 0xff, 0xd5, 0x93, 0xbb, 0x3d, 0x70);
+//
+const GUID GUID_DEVINTERFACE_IsKeyboardRootkittedDriver \
+= { 0x676b766c, 0x5442, 0x4550, { 0x8d, 0xb9,  0xff,  0xd5,  0x93,  0xbb,  0x3d,  0x70 } };
+
+//
 // using namespace
 //
 using namespace ItSoftware;
 using namespace ItSoftware::COM;
 
 //
-//
-//
-DEFINE_GUID( GUID_DEVINTERFACE_KKSKmdIsKeyboardRkt,
-	0x676b766c, 0x5442, 0x4550, 0x8d, 0xb9, 0xff, 0xd5, 0x93, 0xbb, 0x3d, 0x70 );
-
-//
 // namespace
 //
 namespace IsKeyboardRootkitted
 {
-	//bool CApplication::AuthenticateSteamUser()
-	//{		
-	//	if ( SteamAPI_RestartAppIfNecessary( k_uAppIdInvalid ) )
-	//	{
-	//		// if Steam is not running or the game wasn't started through Steam, SteamAPI_RestartAppIfNecessary starts the 
-	//		// local Steam client and also launches this game again.
-
-	//		// Once you get a public Steam AppID assigned for this game, you need to replace k_uAppIdInvalid with it and
-	//		// removed steam_appid.txt from the game depot.
-
-	//		return false;
-	//	}
-	//		
-	//	// Init Steam CEG
-	//	//if ( !Steamworks_InitCEGLibrary() )
-	//	//{
-	//	//	MessageBox( NULL, L"Steam must be running to use this application.", L"Error", MB_OK | MB_ICONERROR );
-	//	//	return false;
-	//	//}
-
-	//	// Initialize SteamAPI, if this fails we bail out since we depend on Steam for lots of stuff.
-	//	// You don't necessarily have to though if you write your code to check whether all the Steam
-	//	// interfaces are NULL before using them and provide alternate paths when they are unavailable.
-	//	//
-	//	// This will also load the in-game steam overlay dll into your process.  That dll is normally
-	//	// injected by steam when it launches games, but by calling this you cause it to always load,
-	//	// even when not launched via steam.
-	//	if ( !SteamAPI_Init() )
-	//	{
-	//		MessageBox( NULL, L"Steam must be running to use this application.", L"Error", MB_OK | MB_ICONERROR );
-	//		return false;
-	//	}
-
-	//	// Ensure that the user has logged into Steam. This will always return true if the game is launched
-	//	// from Steam, but if Steam is at the login prompt when you run your game from the debugger, it
-	//	// will return false.
-	//	if ( !SteamUser()->BLoggedOn() )
-	//	{
-	//		MessageBox( NULL, L"Steam user must be logged in", L"Error", MB_OK | MB_ICONERROR );
-	//		return false;
-	//	}
-
-	//	this->m_hAuthTicketIGaveThisUser = SteamUser()->GetAuthSessionTicket( this->m_rgubTicketIGaveThisUser, sizeof( m_rgubTicketIGaveThisUser ), &m_cubTicketIGaveThisUser );		
-	//	if ( this->m_hAuthTicketIGaveThisUser == k_HAuthTicketInvalid )
-	//	{
-	//		MessageBox( NULL, L"Could not authenticate Steam user.", L"Error", MB_OK | MB_ICONERROR );
-	//		return false;
-	//	}
-
-	//	this->m_bSteamWeAreAuthenticated = true;
-	//	
-	//	return true;
-	//}
-	//
-	//bool CApplication::ReleaseSteamUser()
-	//{
-	//	SteamUser()->CancelAuthTicket( m_hAuthTicketIGaveThisUser );
-
-	//	// Shutdown the SteamAPI
-	//	SteamAPI_Shutdown();
-
-	//	// Shutdown Steam CEG
-	//	//Steamworks_TermCEGLibrary();
-
-	//	return true;
-	//}
-
 	//
 	// Function: wWinMain
 	//
@@ -143,10 +83,7 @@ namespace IsKeyboardRootkitted
 		//
 		// New up Dialogs
 		//			
-		this->m_pCAboutDlg = make_unique<CAboutDlg>( this ); // unique_ptr<CAboutDlg>(new CAboutDlg( this ));
-		//this->m_pCCalibrateDlg = make_unique<CCalibrateDlg>( this );//unique_ptr<CCalibrateDlg>( new CCalibrateDlg( this ) );
-		//this->m_pCSetHidDescriptorsDlg = make_unique<CSetHidDescriptorsDlg>( this );//unique_ptr<CSetHidDescriptorsDlg>( new CSetHidDescriptorsDlg( this ) );
-		//this->m_pCViewMetricsDlg = make_unique<CViewMetricsDlg>( this );//unique_ptr<CViewMetricsDlg>( new CViewMetricsDlg( this ) );
+		this->m_pCAboutDlg = make_unique<CAboutDlg>( this );
 
 		UNREFERENCED_PARAMETER( hPrevInstance );
 		UNREFERENCED_PARAMETER( lpCmdLine );
@@ -774,7 +711,7 @@ namespace IsKeyboardRootkitted
 		LVCOLUMN col0 = { 0 };
 		col0.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_MINWIDTH | LVCF_FMT;
 		col0.fmt = LVCFMT_FIXED_WIDTH;
-		col0.pszText = L"Type";
+		col0.pszText = const_cast<LPWSTR>(L"Type");
 		col0.cchTextMax = 12;				
 		col0.cx = 190;
 		col0.cxMin = 190;
@@ -792,7 +729,7 @@ namespace IsKeyboardRootkitted
 		LVCOLUMN col2 = { 0 };
 		col2.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_MINWIDTH | LVCF_FMT;
 		col2.fmt = LVCFMT_FIXED_WIDTH;
-		col2.pszText = L"Value";
+		col2.pszText = const_cast<LPWSTR>(L"Value");
 		col2.cchTextMax = 6;
 		col2.cx = 320;
 		col2.cxMin = 320;
@@ -801,7 +738,7 @@ namespace IsKeyboardRootkitted
 		LVCOLUMN col3 = { 0 };
 		col3.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_MINWIDTH | LVCF_FMT;
 		col3.fmt = LVCFMT_FIXED_WIDTH;
-		col3.pszText = L"Status";
+		col3.pszText = const_cast<LPWSTR>(L"Status");
 		col3.cchTextMax = 14;
 		col3.cx = 560;
 		col3.cxMin = 560;
@@ -861,7 +798,7 @@ namespace IsKeyboardRootkitted
 			wsprintfW( DevicePath, L"Warning: More than one device interface instance found. Selecting first matching device." );
 		}
 
-		hr = StringCchCopy( DevicePath, BufLen, deviceInterfaceList );
+		hr = StringCchCopyW( DevicePath, BufLen, deviceInterfaceList );
 		if ( FAILED( hr ) )
 		{
 			bRet = FALSE;
@@ -898,11 +835,12 @@ namespace IsKeyboardRootkitted
 		// Fetch Values
 		//
 		wchar_t completeDeviceName[MAX_PATH];
-		if ( !GetDevicePath( const_cast<LPCGUID>(&GUID_DEVINTERFACE_KKSKmdIsKeyboardRkt), completeDeviceName, sizeof( completeDeviceName ) / sizeof( completeDeviceName[0] ) ) )
+		if ( !GetDevicePath( const_cast<LPCGUID>(&GUID_DEVINTERFACE_IsKeyboardRootkittedDriver), completeDeviceName, sizeof( completeDeviceName ) / sizeof( completeDeviceName[0] ) ) )
 		{
 			wstring text( L"GetDevicePath failed with error: " );
 			text += completeDeviceName;
 			MessageBox( NULL, text.c_str(), L"Error", MB_OK | MB_ICONERROR );
+			LeaveCriticalSection(&this->m_hCriticalSection);
 			return;
 		}		
 		
@@ -910,6 +848,7 @@ namespace IsKeyboardRootkitted
 		if ( hDevice == INVALID_HANDLE_VALUE )
 		{
 			MessageBox( NULL, L"Error creating file for device", L"Error", MB_OK | MB_ICONERROR );
+			LeaveCriticalSection(&this->m_hCriticalSection);
 			return;
 		}
 
@@ -920,6 +859,7 @@ namespace IsKeyboardRootkitted
 		{
 			CloseHandle( hDevice );
 			MessageBox( NULL, L"Communicating with Device... [ERROR]", L"Error", MB_OK | MB_ICONERROR );			
+			LeaveCriticalSection(&this->m_hCriticalSection);
 			return;
 		}
 
@@ -927,6 +867,7 @@ namespace IsKeyboardRootkitted
 		{
 			MessageBox( NULL, L"Checking data returned of correct size... [ERROR]", L"Error", MB_OK | MB_ICONERROR );
 			CloseHandle( hDevice );
+			LeaveCriticalSection(&this->m_hCriticalSection);
 			return;
 		}
 
@@ -934,6 +875,7 @@ namespace IsKeyboardRootkitted
 		{
 			MessageBox( NULL, L"Checking if Driver call was a success... [ERROR]", L"Error", MB_OK|MB_ICONERROR);			
 			CloseHandle( hDevice );
+			LeaveCriticalSection(&this->m_hCriticalSection);
 			return;
 		}
 
