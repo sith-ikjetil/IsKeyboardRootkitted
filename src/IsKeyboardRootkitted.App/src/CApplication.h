@@ -4,7 +4,6 @@
 //
 // #include
 //
-#include "../stdafx.h"
 #include <vector>
 #include <memory>
 #include <shellapi.h>
@@ -29,7 +28,7 @@ using namespace std;
 //
 // namespace
 //
-namespace KKS
+namespace IsKeyboardRootkitted
 {
 	//
 	// Class: CApplication

@@ -2,20 +2,27 @@
 // Microsoft Visual C++ generated include file.
 // Used by IsKeyboardRootkitted.App.rc
 
-#define IDS_APP_TITLE			103
+#define IDC_MYICON                      2
+#define IDD_KKSISKEYBOARDRKTAPP_DIALOG  102
+#define IDS_APP_TITLE                   103
+#define IDD_ABOUTBOX                    103
+#define IDM_ABOUT                       104
+#define IDM_EXIT                        105
+#define IDI_KKSISKEYBOARDRKTAPP         107
+#define IDI_SMALL                       108
+#define IDC_KKSISKEYBOARDRKTAPP         109
+#define IDR_MAINFRAME                   128
+#define IDI_ICON_APP                    130
+#define ID_NOTIFY_EXIT                  131
+#define IDB_CPU                         131
+#define ID_NOTIFY_OPEN                  132
+#define IDB_MEMORY                      132
+#define IDR_MENU_STATUSAREA_MAIN        133
+#define IDC_STATIC_VERSION              1000
+#define IDC_STATIC_COPYRIGHT            1001
+#define IDM_REFRESH                     32771
+#define IDC_STATIC                      -1
 
-#define IDR_MAINFRAME			128
-#define IDD_ISKEYBOARDROOTKITTEDAPP_DIALOG	102
-#define IDD_ABOUTBOX			103
-#define IDM_ABOUT				104
-#define IDM_EXIT				105
-#define IDI_ISKEYBOARDROOTKITTEDAPP			107
-#define IDI_SMALL				108
-#define IDC_ISKEYBOARDROOTKITTEDAPP			109
-#define IDC_MYICON				2
-#ifndef IDC_STATIC
-#define IDC_STATIC				-1
-#endif
 // Next default values for new objects
 //
 #ifdef APSTUDIO_INVOKED

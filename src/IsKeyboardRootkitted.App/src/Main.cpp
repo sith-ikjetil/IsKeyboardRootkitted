@@ -1,7 +1,6 @@
 //
 // #include
 //
-#include "stdafx.h"
 #include "../../Include/itsoftware-com.h"
 #include "CApplication.h"
 
@@ -21,9 +20,9 @@ long g_lInstanceCount = 0;
 //
 // using namespace
 //
-using namespace KKS;
-using namespace ItSoftware;
-using namespace ItSoftware::COM;
+using IsKeyboardRootkitted::CApplication;
+using ItSoftware::COM::ItsComApartment;
+using ItSoftware::COM::ItsComRuntime;
 
 //
 // Function: wWinMain
@@ -49,7 +48,7 @@ int APIENTRY wWinMain( _In_ HINSTANCE hInstance,
 	//
 	// Initialize COM runtime
 	//
-	ComRuntime runtime( ComApartment::ApartmentThreaded );
+	ItsComRuntime runtime( ItsComApartment::ApartmentThreaded );
 
 	//
 	// Create Application object and forward call

@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -128,7 +129,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="IsKeyboardRootkitted.App.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="src\CApplication.h" />
     <ClInclude Include="src\dialog\CAboutDlg.h" />
@@ -136,7 +136,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="IsKeyboardRootkitted.App.cpp" />
     <ClCompile Include="src\CApplication.cpp" />
     <ClCompile Include="src\dialog\CAboutDlg.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -146,7 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\cpu.bmp" />
-    <Image Include="IsKeyboardRootkitted.App.ico" />
     <Image Include="resources\keyboard.ico" />
     <Image Include="resources\memory.bmp" />
     <Image Include="resources\small.ico" />

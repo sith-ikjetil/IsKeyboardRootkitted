@@ -1,7 +1,6 @@
 //
 // #include
 //
-#include "stdafx.h"
 #include <iostream>
 #include <iomanip>
 #include <limits>
@@ -47,7 +46,7 @@ DEFINE_GUID( GUID_DEVINTERFACE_KKSKmdIsKeyboardRkt,
 //
 // namespace
 //
-namespace KKS
+namespace IsKeyboardRootkitted
 {
 	//bool CApplication::AuthenticateSteamUser()
 	//{		

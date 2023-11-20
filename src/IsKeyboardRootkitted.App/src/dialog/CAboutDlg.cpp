@@ -1,7 +1,6 @@
 //
 // #include
 //
-#include "stdafx.h"
 #include <string>
 #include <sstream>
 #include "../../Resource.h"
@@ -9,15 +8,16 @@
 #include "../CApplication.h"
 
 //
-// using namespace
-//
-using namespace std;
-
-//
 // namespace
 //
-namespace KKS
+namespace IsKeyboardRootkitted
 {	
+	//
+	// using
+	//
+	using std::wstringstream;
+	using std::wstring;
+
 	//
 	// Constructor
 	//
@@ -31,7 +31,7 @@ namespace KKS
 	//
 	void CAboutDlg::ShowDialog()
 	{
-		DialogBoxParam( this->m_pCApplication->m_hInstance, MAKEINTRESOURCE( IDD_ABOUTBOX ), this->m_pCApplication->m_hWnd, WndProc, reinterpret_cast<LPARAM>(this) );
+		DialogBoxParam( this->m_pCApplication->m_hInstance, MAKEINTRESOURCE( IDD_ABOUTBOX ), this->m_pCApplication->m_hWnd, CAboutDlg::WndProc, reinterpret_cast<LPARAM>(this) );
 	}
 
 	//

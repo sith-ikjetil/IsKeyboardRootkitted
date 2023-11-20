@@ -1,5 +1,9 @@
 #ifndef __CABOUTDLG_H__
 #define __CABOUTDLG_H__
+//
+// #include
+//
+#include <Windows.h>
 
 //
 // #define
@@ -9,7 +13,7 @@
 //
 // namespace
 //
-namespace KKS
+namespace IsKeyboardRootkitted
 {
 	class CApplication;
 
