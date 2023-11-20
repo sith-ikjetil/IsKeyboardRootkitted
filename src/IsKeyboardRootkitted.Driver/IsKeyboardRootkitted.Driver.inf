@@ -1,0 +1,83 @@
+;
+; KKS.KmdIsKeyboardRkt.inf
+;
+[Version]
+Signature="$WINDOWS NT$"
+Class="SoftwareDevice"
+ClassGuid={62f9c741-b25a-46ce-b54c-9bccce08b6f2}
+Provider=%ManufacturerName%
+CatalogFile=IsKeyboardRootkitted.Driver.cat
+DriverVer=11/07/2017,1.0.0.0
+PnPLockdown=1
+
+
+; ================= Class section =====================
+
+;[ClassInstall32]
+;Addreg=SampleClassReg
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$
+
+[Standard.NT$ARCH$]
+%IsKeyboardRootkitted.Driver.DeviceDesc%=IsKeyboardRootkitted.Driver_Device, Root\IsKeyboardRootKitted.Driver
+
+[IsKeyboardRootkitted.Driver_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+IsKeyboardRootkitted.Driver.sys
+
+;-------------- Service installation
+[IsKeyboardRootkitted.Driver_Device.NT.Services]
+AddService = IsKeyboardRootkitted.Driver,%SPSVCINST_ASSOCSERVICE%, IsKeyboardRootkitted.Driver_Service_Inst
+
+; -------------- KKS.KmdIsKeyboardRkt driver install sections
+[IsKeyboardRootkitted.Driver_Service_Inst]
+DisplayName    = %IsKeyboardRootkitted.Driver.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\IsKeyboardRootkitted.Driver.sys
+
+;
+;--- KKS.KmdIsKeyboardRkt_Device Coinstaller installation ------
+;
+
+[DestinationDirs]
+DefaultDestDir = 12
+IsKeyboardRootkitted.Driver_Device_CoInstaller_CopyFiles = 11
+
+[IsKeyboardRootkitted.Driver_Device.NT.CoInstallers]
+AddReg=IsKeyboardRootkitted.Driver_Device_CoInstaller_AddReg
+CopyFiles=IsKeyboardRootkitted.Driver_Device_CoInstaller_CopyFiles
+
+[IsKeyboardRootkitted.Driver_Device_CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[IsKeyboardRootkitted.Driver_Device_CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[SourceDisksFiles]
+IsKeyboardRootkitted.Driver.sys  = 1,,
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+
+[IsKeyboardRootkitted.Driver_Device.NT.Wdf]
+KmdfService =  IsKeyboardRootkitted.Driver, IsKeyboardRootkitted.Driver_wdfsect
+[IsKeyboardRootkitted.Driver_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="Kjetil Kristoffer Solberg"
+ClassName="SoftwareDevice"
+DiskName = "Kernel Mode Driver - Is Keyboard Rootkitted Installation Disk"
+IsKeyboardRootkitted.Driver.DeviceDesc = "Is Keyboard Rootkitted"
+IsKeyboardRootkitted.Driver.SVCDESC = "Is Keyboard Rootkitted Driver"
