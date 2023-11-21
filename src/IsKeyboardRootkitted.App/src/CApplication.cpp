@@ -60,7 +60,13 @@ namespace IsKeyboardRootkitted
 	// Function: wWinMain
 	//
 	int CApplication::WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
-	{			
+	{		
+		//
+		// Use dummy data or not.
+		// Suppresses live data if set to TRUE.
+		//
+		this->m_bUseDummyData = FALSE;
+
 		//
 		// Initialize common controls.
 		//
@@ -156,12 +162,7 @@ namespace IsKeyboardRootkitted
 	//	
 	BOOL CApplication::InitInstance( HINSTANCE hInstance, int nCmdShow )
 	{
-		m_hInstance = hInstance; // Store instance handle in our global variable
-
-		//
-		// Use dummy data or not.
-		//
-		this->m_bUseDummyData = TRUE;
+		m_hInstance = hInstance; // Store instance handle in our global variable		
 
 		int x = (GetSystemMetrics( SM_CXSCREEN ) - MAIN_WINDOW_SIZE_X) / 2;
 		int y = (GetSystemMetrics( SM_CYSCREEN ) - MAIN_WINDOW_SIZE_Y) / 2;
@@ -755,7 +756,7 @@ namespace IsKeyboardRootkitted
 		if ( deviceInterfaceListLength <= 1 )
 		{
 			bRet = FALSE;
-			wsprintfW( DevicePath, L"No active device interfaces found. Is the sample driver loaded?" );
+			wsprintfW( DevicePath, L"No active device interfaces found. Is the driver loaded?" );
 			goto clean0;
 		}
 
@@ -840,8 +841,10 @@ namespace IsKeyboardRootkitted
 			wchar_t completeDeviceName[MAX_PATH];
 			if (!GetDevicePath(const_cast<LPCGUID>(&GUID_DEVINTERFACE_IsKeyboardRootkittedDriver), completeDeviceName, sizeof(completeDeviceName) / sizeof(completeDeviceName[0])))
 			{
-				wstring text(L"GetDevicePath failed with error: ");
-				text += completeDeviceName;
+				wstring text(L"Get device path failed.\n");
+				text += L"GetLastError=";
+				text += ItsError::GetLastErrorDescription();				
+				text += completeDeviceName;				
 				MessageBox(NULL, text.c_str(), L"Error", MB_OK | MB_ICONERROR);
 				LeaveCriticalSection(&this->m_hCriticalSection);
 				return;
