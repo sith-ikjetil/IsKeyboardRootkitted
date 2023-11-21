@@ -756,7 +756,7 @@ namespace IsKeyboardRootkitted
 		if ( deviceInterfaceListLength <= 1 )
 		{
 			bRet = FALSE;
-			wsprintfW( DevicePath, L"No active device interfaces found. Is the driver loaded?" );
+			wsprintfW( DevicePath, L"No active device interfaces found. Is the driver installed?" );
 			goto clean0;
 		}
 
