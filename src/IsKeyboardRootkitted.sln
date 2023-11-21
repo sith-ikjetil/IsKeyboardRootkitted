@@ -24,6 +24,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsKeyboardRootkitted.Setup.CustomAction", "IsKeyboardRootkitted.Setup.CustomAction\IsKeyboardRootkitted.Setup.CustomAction.csproj", "{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binaries", "Binaries", "{383F568F-3FAC-4AB2-8B57-B6FCDBD5A9E0}"
+	ProjectSection(SolutionItems) = preProject
+		Binaries\devcon.exe = Binaries\devcon.exe
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
