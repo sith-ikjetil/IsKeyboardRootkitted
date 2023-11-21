@@ -19,6 +19,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{F450
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IsKeyboardRootkitted.App", "IsKeyboardRootkitted.App\IsKeyboardRootkitted.App.vcxproj", "{51895351-2A37-43BA-BDA5-B9445AFE2DA6}"
 EndProject
+Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "IsKeyboardRootkitted.Setup", "IsKeyboardRootkitted.Setup\IsKeyboardRootkitted.Setup.wixproj", "{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsKeyboardRootkitted.Setup.CustomAction", "IsKeyboardRootkitted.Setup.CustomAction\IsKeyboardRootkitted.Setup.CustomAction.csproj", "{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binaries", "Binaries", "{383F568F-3FAC-4AB2-8B57-B6FCDBD5A9E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -59,6 +65,30 @@ Global
 		{51895351-2A37-43BA-BDA5-B9445AFE2DA6}.Release|x64.Build.0 = Release|x64
 		{51895351-2A37-43BA-BDA5-B9445AFE2DA6}.Release|x86.ActiveCfg = Release|Win32
 		{51895351-2A37-43BA-BDA5-B9445AFE2DA6}.Release|x86.Build.0 = Release|Win32
+		{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}.Debug|ARM64.ActiveCfg = Debug|x86
+		{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}.Debug|ARM64.Build.0 = Debug|x86
+		{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}.Debug|x64.ActiveCfg = Debug|x86
+		{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}.Debug|x64.Build.0 = Debug|x86
+		{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}.Debug|x86.ActiveCfg = Debug|x86
+		{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}.Debug|x86.Build.0 = Debug|x86
+		{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}.Release|ARM64.ActiveCfg = Release|x86
+		{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}.Release|ARM64.Build.0 = Release|x86
+		{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}.Release|x64.ActiveCfg = Release|x86
+		{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}.Release|x64.Build.0 = Release|x86
+		{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}.Release|x86.ActiveCfg = Release|x86
+		{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}.Release|x86.Build.0 = Release|x86
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}.Debug|ARM64.ActiveCfg = Debug|x86
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}.Debug|ARM64.Build.0 = Debug|x86
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}.Debug|x64.ActiveCfg = Debug|x86
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}.Debug|x64.Build.0 = Debug|x86
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}.Debug|x86.ActiveCfg = Debug|x86
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}.Debug|x86.Build.0 = Debug|x86
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}.Release|ARM64.ActiveCfg = Release|x86
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}.Release|ARM64.Build.0 = Release|x86
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}.Release|x64.ActiveCfg = Release|x86
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}.Release|x64.Build.0 = Release|x86
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}.Release|x86.ActiveCfg = Release|x86
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

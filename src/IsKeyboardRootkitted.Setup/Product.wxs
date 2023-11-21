@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:pca="http://schemas.microsoft.com/wix/MsmqExtension" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension" xmlns:utl="http://schemas.microsoft.com/wix/UtilExtension">
+	<Product Id="*" Name="Is Keyboard Rootkitted" Language="1033" Version="2.1.4.0" Manufacturer="SOLBERG IT SOFTWARE" UpgradeCode="{A98DFE37-89D8-46CC-ADBC-FC5140C28D6C}">
+		<Package InstallerVersion="200"  Compressed="yes" InstallScope="perMachine" Platform="x64" />
+
+		<MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of [ProductName] is already installed." AllowSameVersionUpgrades="yes"/>
+
+		<!-- PropertyRef Id="NETFRAMEWORK48" / -->
+
+		<!--Condition Message="This application requires .NET Framework 4.8 Full. Please install the .NET Framework then run this installer again.">
+			<![CDATA[Installed OR NETFRAMEWORK48]]>
+		</Condition -->
+
+		<Icon Id="AppIcon.ico" SourceFile="keyboard.ico"/>
+		<Property Id="ARPPRODUCTICON" Value="AppIcon.ico" />
+
+		<WixVariable Id="WixUIBannerBmp" Value="Banner.bmp" />
+		<WixVariable Id="WixUIDialogBmp" Value="BannerFront.bmp"/>
+
+
+
+		<Binary Id="IsKeyboardRootkittedSetupCustomAction.dll" SourceFile="$(sys.CURRENTDIR)..\IsKeyboardRootkitted.Setup.CustomAction\bin\Release\IsKeyboardRootkitted.Setup.CustomAction.CA.dll" />
+		<CustomAction Id="InstallDriverCA" Return="check" Impersonate="no" BinaryKey="IsKeyboardRootkittedSetupCustomAction.dll" DllEntry="ExecuteInstallInf" Execute="deferred" />
+		<CustomAction Id="InstallDriverCA.SetProperty" Return="check"  Property="InstallDriverCA" Value="[APPLICATIONROOTDIRECTORY]" />
+		<CustomAction Id="UnInstallDriverCA" Return="check" Impersonate="no" BinaryKey="IsKeyboardRootkittedSetupCustomAction.dll" DllEntry="ExecuteUnInstallInf" Execute="deferred" />
+		<CustomAction Id="UnInstallDriverCA.SetProperty" Return="check"  Property="UnInstallDriverCA" Value="[APPLICATIONROOTDIRECTORY]" />
+
+
+		<InstallExecuteSequence>
+			<Custom Action="InstallDriverCA.SetProperty" Before="InstallFinalize" />
+			<Custom Action="InstallDriverCA" After="InstallDriverCA.SetProperty">NOT Installed AND NOT PATCH</Custom >
+			<Custom Action="UnInstallDriverCA.SetProperty" After="InstallInitialize" />
+			<Custom Action="UnInstallDriverCA" After="UnInstallDriverCA.SetProperty">(Installed AND NOT UPGRADINGPRODUCTCODE) OR (Installed AND REMOVE="ALL") OR (REMOVE="ALL")</Custom >
+		</InstallExecuteSequence>
+
+
+
+		<Media Id="1" Cabinet="iskbdrkt.cab" EmbedCab="yes" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFiles64Folder" Name="PFDir">
+				<Directory Id="MANROOTDIRECTORY"  Name="IT Software" ComponentGuidGenerationSeed="{4BB5B4D2-1495-4219-AF3C-E6C5EF286456}">
+					<Directory Id="APPLICATIONROOTDIRECTORY"  Name="IsKeyboardRootkitted" ComponentGuidGenerationSeed="{9E48BFA2-4917-4ECE-A884-3FCF1A995853}">
+
+					</Directory>
+				</Directory>
+			</Directory>
+			<Directory Id="ProgramMenuFolder" Name="PMFolder">
+				<Directory Id="IsKeyboardRootkittedAppFolder" Name="IT Software">
+					<Component Id="IsKeyboardRootkittedAppFolderComponent" Guid="{7112A859-1B55-438B-8147-B246C3DEDB93}">
+						<RemoveFolder Id='IsKeyboardRootkittedAppFolder' On='uninstall'/>
+						<RegistryValue Root='HKCU' Key='SOFTWARE\IT Software\IsKeyboardRootkitted'
+									Type='string' Value='Hello World'
+									KeyPath='yes' />
+					</Component>
+				</Directory>
+			</Directory>
+		</Directory>
+
+		<!-- Step 2: Add files to your installer package -->
+		<DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+			<Component Id="R_IsKeyboardRootkitted.App.exe" Guid="{FB706992-21B4-4C59-A3A1-7E965147F81B}" Win64="yes">
+				<File Id="R_IsKeyboardRootkitted.App.exe" Name="IsKeyboardRootkitted.App.exe"  Vital="yes" Source="$(sys.CURRENTDIR)..\x64\Release\IsKeyboardRootkitted.App.exe" KeyPath="yes" Checksum="no" />
+			</Component>
+			<Component Id="IsKeyboardRootkitted.App.ShortCut" Win64="yes">
+				<Shortcut Id="IsKeyboardRootkitted.App.AppShortcut"
+							 Directory="IsKeyboardRootkittedAppFolder"
+							 Name="Is Keyboard Rootkitted"
+							 Target="[APPLICATIONROOTDIRECTORY]IsKeyboardRootkitted.App.exe"
+							 WorkingDirectory="APPLICATIONROOTDIRECTORY"
+							 Description="Is Keyboard Rootkitted" />
+				<RegistryValue Root="HKCU" Key="Software\IT Software\IsKeyboardRootkitted" Name="installed" Type="integer" Value="1"/>
+			</Component>			
+			<Component Id="R_devcon.exe" Guid="{4EC66914-CAD6-4DEF-887C-E9A11A4D03C8}" Win64="yes">
+				<File Id="R_devcon.exe"  Name="devcon.exe"  Vital="yes" Source="$(sys.CURRENTDIR)..\Binaries\devcon.exe" KeyPath="yes" Checksum="no" />
+			</Component>
+			<Component Id="R_IsKeyboardRootkitted.Driver.cat" Guid="{BA3364B7-6684-45A4-B98F-1B22282DC21E}" Win64="yes">
+				<File Id="R_IsKeyboardRootkitted.Driver.cat"  Name="iskeyboardrootkitted.driver.cat"  Vital="yes" Source="$(sys.CURRENTDIR)..\x64\Release\IsKeyboardRootkitted.Driver\iskeyboardrootkitted.driver.cat" KeyPath="yes" Checksum="no" System="yes" />
+			</Component>
+			<Component Id="R_IsKeyboardRootkitted.Driver.inf" Guid="{4B115F8C-65BB-4AFD-AD5C-105D66F8F0E0}" Win64="yes">
+				<File Id="R_IsKeyboardRootkitted.Driver.inf"  Name="IsKeyboardRootkitted.Driver.inf"  Vital="yes" Source="$(sys.CURRENTDIR)..\x64\Release\IsKeyboardRootkitted.Driver\IsKeyboardRootkitted.Driver.inf" KeyPath="yes" Checksum="no" System="yes" />
+			</Component>
+			<Component Id="R_IsKeyboardRootkitted.Driver.sys" Guid="{A2D4B6D0-1C68-4DEE-A28D-3922C8F41AA7}" Win64="yes">
+				<File Id="R_IsKeyboardRootkitted.Driver.sys"  Name="IsKeyboardRootkitted.Driver.sys"  Vital="yes" Source="$(sys.CURRENTDIR)..\x64\Release\IsKeyboardRootkitted.Driver\IsKeyboardRootkitted.Driver.sys" KeyPath="yes" Checksum="no" System="yes"/>
+			</Component>
+		</DirectoryRef>
+
+
+		<!-- Step 3: Tell WiX to install the files -->
+		<Feature Id="MainFeature" Title="Is Keyboard Rootkitted" ConfigurableDirectory="APPLICATIONROOTDIRECTORY" Description="Is Keyboard Rootkitted Files" TypicalDefault="install" InstallDefault="local" Level="1">
+			<ComponentRef Id="R_IsKeyboardRootkitted.App.exe"/>
+			<ComponentRef Id="IsKeyboardRootkittedAppFolderComponent"/>
+			<ComponentRef Id="IsKeyboardRootkitted.App.ShortCut"/>			
+			<ComponentRef Id="R_devcon.exe" />
+			<ComponentRef Id="R_IsKeyboardRootkitted.Driver.cat" />
+			<ComponentRef Id="R_IsKeyboardRootkitted.Driver.inf" />
+			<ComponentRef Id="R_IsKeyboardRootkitted.Driver.sys" />
+		</Feature>
+
+		<Property Id="WIXUI_INSTALLDIR" Value="TARGETDIR"/>
+
+		<Property Id="VSDSupportedRuntimes" Value="4.0.30319" />
+
+		<UIRef Id="WixUI_Minimal"/>
+		<UIRef Id="WixUI_ErrorProgressText" />
+		<WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+
+	</Product>
+
+</Wix>
