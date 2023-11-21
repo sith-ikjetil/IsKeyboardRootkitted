@@ -68,6 +68,7 @@ namespace IsKeyboardRootkitted
 		HMENU						m_hSubMenuContext;
 		UINT						m_uTaskbarRestart;		
 		BOOL						m_bPerformUpdate;
+		BOOL						m_bUseDummyData;
 		// STEAM -- begin
 		/*HAuthTicket					m_hAuthTicketIGaveThisUser;
 		uint32						m_cubTicketIGaveThisUser;
@@ -84,9 +85,6 @@ namespace IsKeyboardRootkitted
 		BOOL InitInstance(HINSTANCE hInstance, int nCmdShow);
 
 		static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
-		bool AuthenticateSteamUser();
-		bool ReleaseSteamUser();
 		
 		void PopulateListView();
 

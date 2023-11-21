@@ -15,6 +15,7 @@
 #include "Main.h"
 #include "../../Include/itsoftware-com.h"
 #include <winerror.h>
+#include "../../Include/IsKbdRkt.h"
 #include "../../Include/IS_KEYBOARD_RKT_OUTPUT_DATA.h"
 #include <uxtheme.h>
 #include <guiddef.h>
@@ -175,6 +176,10 @@ namespace IsKeyboardRootkitted
 	{
 		m_hInstance = hInstance; // Store instance handle in our global variable
 
+		//
+		// Use dummy data or not.
+		//
+		this->m_bUseDummyData = FALSE;
 
 		int x = (GetSystemMetrics( SM_CXSCREEN ) - MAIN_WINDOW_SIZE_X) / 2;
 		int y = (GetSystemMetrics( SM_CYSCREEN ) - MAIN_WINDOW_SIZE_Y) / 2;
@@ -834,49 +839,65 @@ namespace IsKeyboardRootkitted
 		//
 		// Fetch Values
 		//
-		wchar_t completeDeviceName[MAX_PATH];
-		if ( !GetDevicePath( const_cast<LPCGUID>(&GUID_DEVINTERFACE_IsKeyboardRootkittedDriver), completeDeviceName, sizeof( completeDeviceName ) / sizeof( completeDeviceName[0] ) ) )
-		{
-			wstring text( L"GetDevicePath failed with error: " );
-			text += completeDeviceName;
-			MessageBox( NULL, text.c_str(), L"Error", MB_OK | MB_ICONERROR );
-			LeaveCriticalSection(&this->m_hCriticalSection);
-			return;
-		}		
-		
-		HANDLE hDevice = CreateFileW( completeDeviceName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_READ_ACCESS, NULL );
-		if ( hDevice == INVALID_HANDLE_VALUE )
-		{
-			MessageBox( NULL, L"Error creating file for device", L"Error", MB_OK | MB_ICONERROR );
-			LeaveCriticalSection(&this->m_hCriticalSection);
-			return;
-		}
+		IS_KEYBOARD_RKT_OUTPUT_DATA outputData = { 0 };
 
-		IS_KEYBOARD_RKT_OUTPUT_DATA outputData = { 0 };		
-		DWORD dwNumBytesRead( 0 );		
-		BOOL bResult = ReadFile( hDevice, &outputData, sizeof( IS_KEYBOARD_RKT_OUTPUT_DATA ), &dwNumBytesRead, NULL );
-		if ( !bResult )
+		if (this->m_bUseDummyData) 
 		{
-			CloseHandle( hDevice );
-			MessageBox( NULL, L"Communicating with Device... [ERROR]", L"Error", MB_OK | MB_ICONERROR );			
-			LeaveCriticalSection(&this->m_hCriticalSection);
-			return;
+			outputData.cbSize = sizeof(IS_KEYBOARD_RKT_OUTPUT_DATA);
+			outputData.dwApicBaseAddress = 0xFEE00C00;
+			outputData.dwRootComplexBaseAddress = 0xFFFFFC00;
+			outputData.dwIoApicBaseAddress = 0xFEC00000;			
+			outputData.qwIOAPIC_REDTBL[0] = 0x0000000000010000;
+			outputData.qwIOTRn[0] = 0x80b9ffca83000012;
+			outputData.qwIOTRn[1] = 0x00001261e800003;
+			outputData.qwIOTRn[2] = 0x8CE8B00000320BE;
+			outputData.qwIOTRn[3] = 0x020000D00001222;			
 		}
-
-		if ( dwNumBytesRead != sizeof( IS_KEYBOARD_RKT_OUTPUT_DATA ) )
+		else
 		{
-			MessageBox( NULL, L"Checking data returned of correct size... [ERROR]", L"Error", MB_OK | MB_ICONERROR );
-			CloseHandle( hDevice );
-			LeaveCriticalSection(&this->m_hCriticalSection);
-			return;
-		}
+			wchar_t completeDeviceName[MAX_PATH];
+			if (!GetDevicePath(const_cast<LPCGUID>(&GUID_DEVINTERFACE_IsKeyboardRootkittedDriver), completeDeviceName, sizeof(completeDeviceName) / sizeof(completeDeviceName[0])))
+			{
+				wstring text(L"GetDevicePath failed with error: ");
+				text += completeDeviceName;
+				MessageBox(NULL, text.c_str(), L"Error", MB_OK | MB_ICONERROR);
+				LeaveCriticalSection(&this->m_hCriticalSection);
+				return;
+			}
 
-		if ( outputData.ntStatusCode != 0 )
-		{
-			MessageBox( NULL, L"Checking if Driver call was a success... [ERROR]", L"Error", MB_OK|MB_ICONERROR);			
-			CloseHandle( hDevice );
-			LeaveCriticalSection(&this->m_hCriticalSection);
-			return;
+			HANDLE hDevice = CreateFileW(completeDeviceName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_READ_ACCESS, NULL);
+			if (hDevice == INVALID_HANDLE_VALUE)
+			{
+				MessageBox(NULL, L"Error creating file for device", L"Error", MB_OK | MB_ICONERROR);
+				LeaveCriticalSection(&this->m_hCriticalSection);
+				return;
+			}
+
+			DWORD dwNumBytesRead(0);
+			BOOL bResult = ReadFile(hDevice, &outputData, sizeof(IS_KEYBOARD_RKT_OUTPUT_DATA), &dwNumBytesRead, NULL);
+			if (!bResult)
+			{
+				CloseHandle(hDevice);
+				MessageBox(NULL, L"Communicating with Device... [ERROR]", L"Error", MB_OK | MB_ICONERROR);
+				LeaveCriticalSection(&this->m_hCriticalSection);
+				return;
+			}
+
+			if (dwNumBytesRead != sizeof(IS_KEYBOARD_RKT_OUTPUT_DATA))
+			{
+				MessageBox(NULL, L"Checking data returned of correct size... [ERROR]", L"Error", MB_OK | MB_ICONERROR);
+				CloseHandle(hDevice);
+				LeaveCriticalSection(&this->m_hCriticalSection);
+				return;
+			}
+
+			if (outputData.ntStatusCode != 0)
+			{
+				MessageBox(NULL, L"Checking if Driver call was a success... [ERROR]", L"Error", MB_OK | MB_ICONERROR);
+				CloseHandle(hDevice);
+				LeaveCriticalSection(&this->m_hCriticalSection);
+				return;
+			}
 		}
 
 		//
