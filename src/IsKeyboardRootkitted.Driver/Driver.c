@@ -168,16 +168,11 @@ Return Value:
     //
     WPP_CLEANUP(WdfDriverWdmGetDriverObject((WDFDRIVER)DriverObject));
 }
-
-void WriteDebugInfo(char* pszInformation)
-{
-    if (pszInformation == NULL) {
-        return;
-    }
-
-    DbgPrintEx(DPFLTR_DEFAULT_ID, DPFLTR_INFO_LEVEL, pszInformation);
-}
-
+/// <summary>
+/// Writes debug info format string.
+/// </summary>
+/// <param name="pszInformation"></param>
+/// <param name=""></param>
 void WriteDebugInfoLineFormat(char* pszInformation, ...)
 {
     if (pszInformation == NULL) {
@@ -189,7 +184,13 @@ void WriteDebugInfoLineFormat(char* pszInformation, ...)
     DbgPrintEx(DPFLTR_DEFAULT_ID, DPFLTR_INFO_LEVEL, pszInformation, args);
     va_end(args);
 }
-
+/// <summary>
+/// Formats string.
+/// </summary>
+/// <param name="pszDest"></param>
+/// <param name="chLength"></param>
+/// <param name="pszFormat"></param>
+/// <param name=""></param>
 void FormatString(char* pszDest, size_t chLength, char* pszFormat, ...)
 {
     if (pszDest == NULL || pszFormat == NULL || chLength < strlen(pszFormat)) {
@@ -201,55 +202,17 @@ void FormatString(char* pszDest, size_t chLength, char* pszFormat, ...)
     RtlStringCbVPrintfA(pszDest, chLength, pszFormat, args);
     va_end(args);
 }
-
+/// <summary>
+/// Writes debug info.
+/// </summary>
+/// <param name="pszInformation">info to write</param>
 void WriteDebugInfoLine(char* pszInformation)
 {
     if (pszInformation == NULL) {
         return;
     }
 
-    DbgPrintEx(DPFLTR_DEFAULT_ID, DPFLTR_INFO_LEVEL, pszInformation);
-    /*return;
-    if (pszInformation == NULL) {
-        return;
-    }
-    DWORD dwLength = (DWORD)strlen(pszInformation);
-    if (dwLength == 0) {
-        return;
-    }
-
-    UNICODE_STRING uString;
-    RtlInitUnicodeString(&uString, g_wszOutputDebugPath);
-
-    OBJECT_ATTRIBUTES objectAttributes;
-    InitializeObjectAttributes(&objectAttributes, &uString, 0, NULL, NULL);
-
-    HANDLE hFile = NULL;
-
-    IO_STATUS_BLOCK ioStatusBlock;
-    memset(&ioStatusBlock, 0, sizeof(IO_STATUS_BLOCK));
-
-
-    NTSTATUS ntStatus = ZwCreateFile(&hFile, GENERIC_READ | GENERIC_WRITE, &objectAttributes, &ioStatusBlock, 0, FILE_ATTRIBUTE_NORMAL, FILE_SHARE_READ, FILE_OPEN_IF, FILE_WRITE_THROUGH | FILE_NON_DIRECTORY_FILE, NULL, 0);//, CreateFileTypeNone, NULL, IO_NO_PARAMETER_CHECKING);
-    if (!NT_SUCCESS(ntStatus)) {
-        return;
-    }
-
-    FILE_STANDARD_INFORMATION fileStdInfo;
-    ntStatus = ZwQueryInformationFile(hFile, &ioStatusBlock, (PVOID)&fileStdInfo, sizeof(FILE_STANDARD_INFORMATION), FileStandardInformation);
-    if (!NT_SUCCESS(ntStatus)) {
-        ZwClose(hFile);
-        return;
-    }
-
-    LARGE_INTEGER newOffset = { 0 };
-    newOffset = fileStdInfo.EndOfFile;
-    newOffset.LowPart += dwLength;
-    ntStatus = ZwWriteFile(hFile, NULL, NULL, NULL, &ioStatusBlock, pszInformation, dwLength, &fileStdInfo.EndOfFile, NULL);
-    ntStatus = ZwWriteFile(hFile, NULL, NULL, NULL, &ioStatusBlock, "\r\n", 2, &newOffset, NULL);
-
-    ZwClose(hFile);
-    */
+    DbgPrintEx(DPFLTR_DEFAULT_ID, DPFLTR_INFO_LEVEL, pszInformation);    
 }
 
 

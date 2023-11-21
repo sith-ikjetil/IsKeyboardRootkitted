@@ -19,9 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="..\..\KKS.IsKeyboardRkt\src\KKS.KmdIsKeyboardRkt\IsKbdRkt.asm">
-      <FileType>Document</FileType>
-    </MASM>
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +144,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <FilesToPackage Include="$(TargetPath)" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="IsKbdRkt.asm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

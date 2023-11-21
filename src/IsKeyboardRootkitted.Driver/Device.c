@@ -87,9 +87,9 @@ Return Value:
             //
             // Initialize the I/O Package and any Queues
             //
-            WriteDebugInfoLine("#9");
+            //WriteDebugInfoLine("#9");
             ntStatus = IsKeyboardRootkittedDriverQueueInitialize(device);
-            WriteDebugInfoLine("#10");
+            //WriteDebugInfoLine("#10");
         }
     }
 

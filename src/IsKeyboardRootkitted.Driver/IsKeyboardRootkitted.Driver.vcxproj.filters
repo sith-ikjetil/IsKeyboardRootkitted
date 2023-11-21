@@ -20,9 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
-    <None Include="..\..\KKS.IsKeyboardRkt\src\KKS.KmdIsKeyboardRkt\IsKbdRkt.asm">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Inf Include="IsKeyboardRootkitted.Driver.inf">
@@ -56,5 +53,10 @@
     <ClCompile Include="Queue.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="IsKbdRkt.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
   </ItemGroup>
 </Project>
