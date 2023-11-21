@@ -73,7 +73,7 @@ namespace IsKeyboardRootkitted
 			GetSystemTime(&st);
 
 			wstringstream ss;
-			ss << L"Copyright (c) 2015-" << st.wYear << L" Kjetil Kristoffer Solberg" << L" @ IT Software";
+			ss << L"Copyright © 2015-" << st.wYear << L" SOLBERG IT SOFTWARE";
 			
 			wstring copyright = ss.str();
 			SetDlgItemText(hDlg, IDC_STATIC_COPYRIGHT, copyright.c_str());

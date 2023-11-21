@@ -60,17 +60,7 @@ namespace IsKeyboardRootkitted
 	// Function: wWinMain
 	//
 	int CApplication::WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
-	{	
-		//
-		// Init STEAM status, do not remove.
-		//
-		this->m_bSteamWeAreAuthenticated = false;
-
-		//
-		// RUN THIS LINE IF USE STEAM
-		//
-		//if ( !this->AuthenticateSteamUser() ) { return 1; }
-
+	{			
 		//
 		// Initialize common controls.
 		//
@@ -117,15 +107,7 @@ namespace IsKeyboardRootkitted
 			}
 		}
 
-		this->RemoveStatusBarIcon();		
-		
-		//
-		// PART OF STEAM
-		//
-		if ( this->m_bSteamWeAreAuthenticated )
-		{
-			//this->ReleaseSteamUser();
-		}
+		this->RemoveStatusBarIcon();
 
 		return (int)msg.wParam;		
 	}
@@ -179,7 +161,7 @@ namespace IsKeyboardRootkitted
 		//
 		// Use dummy data or not.
 		//
-		this->m_bUseDummyData = FALSE;
+		this->m_bUseDummyData = TRUE;
 
 		int x = (GetSystemMetrics( SM_CXSCREEN ) - MAIN_WINDOW_SIZE_X) / 2;
 		int y = (GetSystemMetrics( SM_CYSCREEN ) - MAIN_WINDOW_SIZE_Y) / 2;
@@ -847,7 +829,7 @@ namespace IsKeyboardRootkitted
 			outputData.dwApicBaseAddress = 0xFEE00C00;
 			outputData.dwRootComplexBaseAddress = 0xFFFFFC00;
 			outputData.dwIoApicBaseAddress = 0xFEC00000;			
-			outputData.qwIOAPIC_REDTBL[0] = 0x0000000000010000;
+			outputData.qwIOAPIC_REDTBL[1] = 0x0000000000010000;
 			outputData.qwIOTRn[0] = 0x80b9ffca83000012;
 			outputData.qwIOTRn[1] = 0x00001261e800003;
 			outputData.qwIOTRn[2] = 0x8CE8B00000320BE;
