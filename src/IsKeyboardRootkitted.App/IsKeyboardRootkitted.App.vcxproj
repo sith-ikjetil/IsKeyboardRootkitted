@@ -111,6 +111,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>Hid.lib Setupapi.lib Comctl32.lib Version.lib msxml6.lib cfgmgr32.lib setupapi.lib uxtheme.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -129,6 +133,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>Hid.lib Setupapi.lib Comctl32.lib Version.lib msxml6.lib cfgmgr32.lib setupapi.lib uxtheme.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>cd $(ProjectDir)
+Setup-Sign.bat</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
