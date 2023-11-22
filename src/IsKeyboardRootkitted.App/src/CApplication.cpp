@@ -231,7 +231,14 @@ namespace IsKeyboardRootkitted
 			{				
 				this->PopulateListView();
 				break;
-			}			
+			}		
+			case IDM_USE_DUMMY_DATA:
+			{
+				this->m_bUseDummyData = !this->m_bUseDummyData;
+				CheckMenuItem(this->m_hMenu, IDM_USE_DUMMY_DATA, (this->m_bUseDummyData) ? MF_CHECKED : MF_UNCHECKED);
+				PostMessage(hWnd, message, MAKEWPARAM(IDM_REFRESH, 0), lParam);
+				break;
+			}
 			case IDM_EXIT:
 				DestroyWindow( hWnd );
 				break;
