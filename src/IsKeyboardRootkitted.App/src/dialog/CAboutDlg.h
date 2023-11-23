@@ -8,7 +8,7 @@
 //
 // #define
 //
-#define ABOUT_DIALOG_VERSION_TEXT	L"Is Keyboard Rootkitted, Version "
+#define ABOUT_DIALOG_VERSION_TEXT	L"Is Keyboard Rootkitted?, Version "
 
 //
 // namespace

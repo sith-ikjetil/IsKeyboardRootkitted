@@ -27,7 +27,7 @@
 //
 #define MAIN_WINDOW_SIZE_X			1280
 #define MAIN_WINDOW_SIZE_Y			450
-#define EVENT_LOG_SOURCE_NAME					L"KKS Is Keyboard Rootkitted"
+#define EVENT_LOG_SOURCE_NAME		L"Is Keyboard Rootkitted?"
 
 //
 // const
@@ -195,7 +195,7 @@ namespace IsKeyboardRootkitted
 		this->m_notifyIconData.cbSize = sizeof( NOTIFYICONDATA );
 		this->m_notifyIconData.hIcon = this->m_hIconStatusArea;
 		this->m_notifyIconData.hWnd = hWnd;
-		wcscpy_s( this->m_notifyIconData.szTip, L"Is Keyboard Rootkitted" );
+		wcscpy_s( this->m_notifyIconData.szTip, L"Is Keyboard Rootkitted?" );
 		this->m_notifyIconData.uCallbackMessage = RACECORE24_NOTIFYICON_CALLBACK_MESSAGE;
 		this->m_notifyIconData.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
 		this->m_notifyIconData.uVersion = NOTIFYICON_VERSION;
