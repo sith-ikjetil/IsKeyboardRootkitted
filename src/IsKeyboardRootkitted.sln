@@ -19,7 +19,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{F450
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IsKeyboardRootkitted.App", "IsKeyboardRootkitted.App\IsKeyboardRootkitted.App.vcxproj", "{51895351-2A37-43BA-BDA5-B9445AFE2DA6}"
 EndProject
-Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "IsKeyboardRootkitted.Setup", "IsKeyboardRootkitted.Setup\IsKeyboardRootkitted.Setup.wixproj", "{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "IsKeyboardRootkitted.Setup", "IsKeyboardRootkitted.Setup\IsKeyboardRootkitted.Setup.wixproj", "{FA9F3CAC-00CA-4E3F-96A2-CEA125BE26A0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0FB9E8CB-15A2-41A7-A8A9-E0C90218A8F3} = {0FB9E8CB-15A2-41A7-A8A9-E0C90218A8F3}
+		{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F} = {4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}
+		{51895351-2A37-43BA-BDA5-B9445AFE2DA6} = {51895351-2A37-43BA-BDA5-B9445AFE2DA6}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsKeyboardRootkitted.Setup.CustomAction", "IsKeyboardRootkitted.Setup.CustomAction\IsKeyboardRootkitted.Setup.CustomAction.csproj", "{4B8076D9-1FE0-4ACD-A1DF-454A05FE8E5F}"
 EndProject

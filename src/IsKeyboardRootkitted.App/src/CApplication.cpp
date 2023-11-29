@@ -848,9 +848,7 @@ namespace IsKeyboardRootkitted
 			wchar_t completeDeviceName[MAX_PATH];
 			if (!GetDevicePath(const_cast<LPCGUID>(&GUID_DEVINTERFACE_IsKeyboardRootkittedDriver), completeDeviceName, sizeof(completeDeviceName) / sizeof(completeDeviceName[0])))
 			{
-				wstring text(L"Get device path failed.\n");
-				text += L"GetLastError=";
-				text += ItsError::GetLastErrorDescription();				
+				wstring text(L"Get device path failed.\n");				
 				text += completeDeviceName;				
 				MessageBox(NULL, text.c_str(), L"Error", MB_OK | MB_ICONERROR);
 				LeaveCriticalSection(&this->m_hCriticalSection);
